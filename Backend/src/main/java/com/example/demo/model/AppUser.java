@@ -24,8 +24,9 @@ public class AppUser {
     private String password;
     @Column(name = "status")
     private Boolean status;
-    @Column(name = "admin")
-    private Boolean isAdmin;
+    @Column(name = "roles")
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 
 
 
