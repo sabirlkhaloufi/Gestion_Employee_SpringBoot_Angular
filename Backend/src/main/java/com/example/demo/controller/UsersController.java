@@ -1,12 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.AppUser;
+import com.example.demo.model.Role;
 import com.example.demo.services.UserServiceImpl;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,7 +31,30 @@ public class UsersController {
         return ResponseEntity.ok().body(userService.getUserById(userId));
 
     }
-//creating a delete mapping that deletes a specified user
+@PostMapping("/save")
+    public ResponseEntity<AppUser> saveUser(@RequestBody AppUser user){
+    URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/users/save").toUriString());
+    return ResponseEntity.created(uri).body(userService.saveUser(user));
+}
+@GetMapping("roles")
+public ResponseEntity<List<Role>> GetRoles(){
+    return ResponseEntity.ok().body(userService.getAllRoles());
+}
+
+@PostMapping("role/save")
+    public  ResponseEntity<Role> saveRole(@RequestBody Role role){
+    URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/users/role/save").toUriString());
+    return ResponseEntity.created(uri).body(userService.saveRole(role));
+}
+    @PostMapping("role/addtouser")
+    public  ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form){
+        userService.addRoleToUser(form.getUsername(), form.getRole());
+        return ResponseEntity.ok().build();
+    }
+
+
+
+    //creating a delete mapping that deletes a specified user
 
     @DeleteMapping("/{userid}")
     public Long DeleteUser(@PathVariable("userid") Long userid){
@@ -46,4 +73,9 @@ public class UsersController {
 
 
 
+}
+@Data
+class RoleToUserForm{
+    private String username;
+    private String role;
 }

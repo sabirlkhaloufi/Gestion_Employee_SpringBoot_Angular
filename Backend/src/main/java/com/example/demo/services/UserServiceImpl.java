@@ -44,10 +44,14 @@ public class UserServiceImpl implements UserDetailsService {
         return new User(user.getUsername(),user.getPassword(),authorities);
     }
     public AppUser saveUser(AppUser user){
+        String username=user.getUsername();
+        System.out.println("User {} is saved "+username);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
     public Role saveRole(Role role){
+        System.out.println("User {} is saved "+role.getRole());
+
         return roleRepo.save(role);
     }
     public void addRoleToUser(String username,String roleName){
@@ -60,6 +64,11 @@ public class UserServiceImpl implements UserDetailsService {
     }
     public AppUser getUserById(Long id){
         return userRepo.findAppUserById(id);
+    }
+    public List<Role> getAllRoles() {
+        List<Role> roles = new ArrayList<>();
+        roleRepo.findAll().forEach(user->roles.add(user));
+        return roles;
     }
     public List<AppUser> getAllUsers() {
         List<AppUser> users = new ArrayList<>();
