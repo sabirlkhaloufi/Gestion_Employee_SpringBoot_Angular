@@ -11,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,11 +33,14 @@ public class AuthFilter  extends UsernamePasswordAuthenticationFilter {
         this.authenticationManager = authenticationManager;
     }
 
-
+    @CrossOrigin("*")
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String username= request.getParameter("username");
         String password= request.getParameter("password");
+        System.out.println(username);
+        System.out.println(password);
+
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username,password);
         return authenticationManager.authenticate(token);
 
