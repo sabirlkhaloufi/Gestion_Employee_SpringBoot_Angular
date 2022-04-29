@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 import java.util.Collection;
+=======
+
 
 @Entity
 @Data
@@ -20,7 +23,9 @@ public class Country {
 
     @Column(nullable = false,updatable = false,name = "country")
     private Long country;
+
     @ManyToMany(mappedBy = "countries")
 
     private Collection<Date> dates;
+
 }

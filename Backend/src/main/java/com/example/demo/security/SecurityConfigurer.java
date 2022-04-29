@@ -1,6 +1,7 @@
 package com.example.demo.security;
 
 import com.example.demo.filter.AuthFilter;
+import com.example.demo.filter.AuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import static org.springframework.http.HttpMethod.GET;
+
 @Configuration @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
@@ -33,9 +36,14 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().anyRequest().permitAll();
-        http.addFilter(new AuthFilter(authenticationManagerBean()));
+        http.authorizeRequests().antMatchers("/login/**").permitAll();
+        http.authorizeRequests().antMatchers(GET,"/api/**").hasAnyAuthority("USER");
+
+        http.authorizeRequests().antMatchers(GET,"/api/users/").hasAnyAuthority("USER");
+        http.authorizeRequests().anyRequest().authenticated();
         http.cors(Customizer.withDefaults());
+        http.addFilter(new AuthFilter(authenticationManagerBean()));
+        http.addFilter(new AuthorizationFilter());
 
 
     }

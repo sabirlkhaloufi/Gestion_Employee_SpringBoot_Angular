@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+=======
 
 @Entity
 @Data
@@ -30,4 +31,5 @@ public class Date {
             joinColumns = @JoinColumn(name = "country_id"),
             inverseJoinColumns = @JoinColumn(name = "date_id"))
     private Collection<Country> countries;
+
 }

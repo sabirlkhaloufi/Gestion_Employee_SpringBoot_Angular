@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserDetailsService {
     public AppUser getUserById(Long id){
         return userRepo.findAppUserById(id);
     }
+
     public List<Role> getAllRoles() {
         List<Role> roles = new ArrayList<>();
         roleRepo.findAll().forEach(user->roles.add(user));
