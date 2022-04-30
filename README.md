@@ -16,5 +16,10 @@
 [POST] /api/users/role/addtouser
 ## Login :
 [POST] /login
+## Get Cases infos:
+[GET] /api/cases
+## Get Countries infos:
+[GET] /api/cases/countries
+
 
 
