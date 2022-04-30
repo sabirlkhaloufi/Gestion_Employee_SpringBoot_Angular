@@ -38,8 +38,8 @@ public class AuthFilter  extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String username= request.getParameter("username");
         String password= request.getParameter("password");
-        System.out.println(username);
-        System.out.println(password);
+        System.out.println("username"+username);
+        System.out.println("pass"+password);
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username,password);
         return authenticationManager.authenticate(token);

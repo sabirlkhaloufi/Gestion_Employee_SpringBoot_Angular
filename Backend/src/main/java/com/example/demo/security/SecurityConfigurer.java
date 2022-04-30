@@ -1,6 +1,8 @@
 package com.example.demo.security;
 
 import com.example.demo.filter.AuthFilter;
+//import com.example.demo.filter.AuthorizationFilter;
+import com.example.demo.filter.AuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
@@ -36,9 +38,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(new AuthFilter(authenticationManagerBean()));
         http.cors(Customizer.withDefaults());
-
+//        http.addFilter(new AuthorizationFilter());
 
     }
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
